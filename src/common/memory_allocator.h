@@ -171,7 +171,7 @@ struct PageStdAllocator : public std::allocator<T> {
 
   template <class Other> PageStdAllocator(const PageStdAllocator<Other>& other)
       : allocator_(other.allocator_),
-        stackdata_(nullptr),
+        stackdata_(NULL),
         stackdata_size_(0)
   {}
 
