@@ -133,15 +133,15 @@ bool HTTPUpload::SendRequest(const string &url,
   // Add form data.
   CURLFORMcode (*curl_formadd)(struct curl_httppost **, struct curl_httppost **, ...);
   *(void**) (&curl_formadd) = dlsym(curl_lib, "curl_formadd");
-  map<string, string>::const_iterator iter = parameters.begin();
-  for (; iter != parameters.end(); ++iter)
+  map<string, string>::const_reverse_iterator iter = parameters.rbegin();
+  for (; iter != parameters.rend(); ++iter)
     (*curl_formadd)(&formpost, &lastptr,
                  CURLFORM_COPYNAME, iter->first.c_str(),
                  CURLFORM_COPYCONTENTS, iter->second.c_str(),
                  CURLFORM_END);
 
   // Add form files.
-  for (iter = files.begin(); iter != files.end(); ++iter) {
+  for (iter = files.rbegin(); iter != files.rend(); ++iter) {
     (*curl_formadd)(&formpost, &lastptr,
                  CURLFORM_COPYNAME, iter->first.c_str(),
                  CURLFORM_FILE, iter->second.c_str(),
